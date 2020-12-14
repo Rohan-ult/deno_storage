@@ -1,14 +1,19 @@
 import { join } from "https://deno.land/std/path/mod.ts";
-type key = string | number;
 
+type key = string | number;
 interface keyValue<T> {
-    [key: string]: T
-    [key: number]: T
+    [key: string]: T;
+    [key: number]: T;
 }
 
 export class KeyValue<T> {
     protected data: keyValue<T> = {};
-    get(key: key) {
+    get(key: key): T;
+    get(key: key[]): T[];
+    get(key: key | key[]) {
+        if (Array.isArray(key))
+            return key.map(_key => this.data[_key])
+
         return this.data[key]
     }
     set(key: key, value: T): any;
