@@ -1,7 +1,9 @@
-### Storage
+## Storage
 A basic key-value storage for deno. 
 
 ```ts
+import { LocalStorage } from "https://deno.land/x/storage/mod.ts"
+
 let storage = new LocalStorage
 // load data
 await storage.load()
