@@ -1,5 +1,5 @@
-## key-value
-A basic key-value storage for deno.
+### Storage
+A basic key-value storage for deno. 
 
 ```ts
 let storage = new LocalStorage
