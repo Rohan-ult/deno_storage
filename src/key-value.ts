@@ -6,14 +6,29 @@ interface keyValue<T> {
 
 export class KeyValue<T> {
     protected data: keyValue<T> = {};
+    /**
+     * ```ts
+     *  ls.get('key') // 'value'
+     *  ls.get(['key','key2']) // ['value','value2']
+     * ```
+     * *Note:* It return a referance.
+     */
     get(key: key): T;
     get(key: key[]): T[];
     get(key: key | key[]) {
-        if (Array.isArray(key))
-            return key.map(_key => this.data[_key])
-
+        if (Array.isArray(key)) {
+            let getData = (_key: key) => this.data[_key]
+            return key.map(getData)
+        }
         return this.data[key]
     }
+    /**
+     * ```ts
+     * ls.set('key','value');
+     * ls.set([ ['key','value'] ]); // set data from entrie
+     * ls.set({ key : 'value' }) // set data from Object
+     * ```
+     */
     set(key: key, value: T): T;
     set(object: keyValue<T>): void;
     set(entries: Iterable<readonly [key, T]>): void;
@@ -31,12 +46,15 @@ export class KeyValue<T> {
     delete(key: key) {
         return delete this.data[key]
     }
+    /** Returns an iterable of keys. */
     keys() {
         return Object.keys(this.data)
     }
+    /** Returns an iterable of values. */
     values() {
         return Object.values(this.data)
     }
+    /** Returns an iterable of key, value pairs for every entry. */
     entries() {
         return Object.entries(this.data)
     }
