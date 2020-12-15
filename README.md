@@ -1,12 +1,10 @@
 ## Storage
-A basic key-value storage for deno. 
+A key-value is a in-memory storage for deno.
 
 ```ts
-import { LocalStorage } from "https://deno.land/x/storage/mod.ts"
+import { LocalStorage } from "https://deno.land/x/storage@0.0.4/mod.ts"
 
-let storage = new LocalStorage
-// load data
-await storage.load()
+const storage = new LocalStorage<string>();
 
 // set data
 storage.set({
