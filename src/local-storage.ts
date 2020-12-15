@@ -13,6 +13,9 @@ export class LocalStorage<T> extends KeyValue<T> {
                 throw err
         }
     }
+    /**
+     * Sava data from memory to disk. Use it only when program end. Don't overuse it.
+     */
     save() {
         return Deno.writeTextFile(this._path, JSON.stringify(this.data))
     }
