@@ -35,8 +35,11 @@ export class KeyValue<T> {
     set(key: key, data: (data: T | undefined) => T | void): T | void;
     set(key: any, value?: any) {
         if (typeof value == "function") {
-            let setter = value(this.data[key]);
-            return setter && (this.data[key] = setter);
+            let newValue = value(this.data[key]);
+            if (typeof newValue != "undefined")
+                this.data[key] = newValue;
+
+            return newValue
         }
         if (typeof key == "string")
             return this.data[key] = value
