@@ -13,9 +13,9 @@ export class KeyValue<T> {
      * ```
      * *Note:* It return a referance.
      */
-    get(key: key): T;
-    get(key: key[]): T[];
-    get(key: key | key[]) {
+    get(key: key): T | undefined;
+    get(key: key[]): (T | undefined)[];
+    get(key: key | key[]): (T | undefined) | (T | undefined)[] {
         if (Array.isArray(key)) {
             let getData = (_key: key) => this.data[_key]
             return key.map(getData)
@@ -32,7 +32,15 @@ export class KeyValue<T> {
     set(key: key, value: T): T;
     set(object: keyValue<T>): void;
     set(entries: Iterable<readonly [key, T]>): void;
+    set(key: key, data: (data: T | undefined) => T | void): T | void;
     set(key: any, value?: any) {
+        if (typeof value == "function") {
+            let newValue = value(this.data[key]);
+            if (typeof newValue != "undefined")
+                this.data[key] = newValue;
+
+            return newValue
+        }
         if (typeof key == "string")
             return this.data[key] = value
         if (Array.isArray(key))
