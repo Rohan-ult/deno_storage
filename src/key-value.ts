@@ -36,7 +36,7 @@ export class KeyValue<T> {
     set(key: any, value?: any) {
         if (typeof value == "function") {
             let newValue = value(this.data[key]);
-            if (typeof newValue != "undefined")
+            if (newValue !== undefined)
                 this.data[key] = newValue;
 
             return newValue
