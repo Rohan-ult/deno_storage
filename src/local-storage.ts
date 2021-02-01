@@ -9,14 +9,16 @@ export class LocalStorage<T> extends KeyValue<T> {
         } catch (err) {
             if (err instanceof Deno.errors.NotFound)
                 Deno.writeTextFileSync(this._path, JSON.stringify(this.data))
-            else 
+            else
                 throw err
         }
     }
     /**
      * Sava data from memory to disk. Use it only when program end. Don't overuse it.
      */
-    save() {
-        return Deno.writeTextFile(this._path, JSON.stringify(this.data))
+    save(replacer?: (this: any, key: string, value: any) => any, space?: string | number): void;
+    save(replacer?: (number | string)[] | null, space?: string | number): void;
+    save(replacer?: any, space?: any) {
+        return Deno.writeTextFile(this._path, JSON.stringify(this.data, replacer, space))
     }
 }
