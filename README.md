@@ -31,5 +31,12 @@ storage.has("key2") // false
 storage.clear() // {}
 
 // sava data
-await storage.save()
+await storage.save();
+
+// update data 
+storage.set("ID", data => {
+   data ?? = { prop: 'value' } // default data
+   data.prop = "newValue";
+   return data; // update data 
+})
 ```
