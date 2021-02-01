@@ -2,7 +2,7 @@
 A key-value is a in-memory storage for deno.
 
 ```ts
-import { LocalStorage } from "https://deno.land/x/storage@0.0.4/mod.ts"
+import { LocalStorage } from "https://deno.land/x/storage@0.0.5/mod.ts"
 
 const storage = new LocalStorage<string>();
 
@@ -30,13 +30,15 @@ storage.delete("key2")
 storage.has("key2") // false
 storage.clear() // {}
 
-// sava data
-await storage.save();
-
+const storage2 = new LocalStorage<{prop : string}>();
 // update data 
-storage.set("ID", data => {
+storage2.set("ID", data => {
    data ?? = { prop: 'value' } // default data
    data.prop = "newValue";
    return data; // update data 
 })
+
+// sava data
+await storage.save();
+await storage2.save();
 ```
